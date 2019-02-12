@@ -22,8 +22,7 @@ public class Pathfinder {
      */
     public static ArrayList<String> solve (MazeProblem problem) {
         Queue<SearchTreeNode> frontier = new LinkedList<SearchTreeNode>();
-        SearchTreeNode initial = new SearchTreeNode(problem.INITIAL_STATE, null, null);
-        frontier.add(initial);
+        frontier.add(new SearchTreeNode(problem.INITIAL_STATE, null, null));
 
         while (!frontier.isEmpty()) {
           SearchTreeNode current = frontier.poll();
