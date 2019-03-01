@@ -66,7 +66,6 @@ public class NimPlayer {
                     action,
                     isMax ? false : true
                 );
-
                 // If we already found a child's minimax value, compare the vertex with
                 // pre-computed value, otherwise compare with it's generated
                 // minimax value
@@ -75,11 +74,9 @@ public class NimPlayer {
                 } else {
                     vertex = Math.max(vertex, alphaBetaMinimax(child, alpha, beta, false, visited));
                 }
-
                 // Set alpha value for the max node
                 alpha = Math.max(alpha, vertex);
                 if (beta <= alpha) { break; }
-
                 // Adds generated node to the current node's children(list)
                 node.addChild(child);
             }
@@ -100,7 +97,6 @@ public class NimPlayer {
                     action,
                     isMax ? false : true
                 );
-
                 // If we already found a child's minimax value, compare the vertex with
                 // pre-computed value, otherwise compare with it's generated
                 // minimax value
@@ -109,11 +105,9 @@ public class NimPlayer {
                 } else {
                     vertex = Math.min(vertex, alphaBetaMinimax(child, alpha, beta, true, visited));
                 }
-
                 // Set beta value for the min node
                 beta = Math.max(beta, vertex);
                 if (beta <= alpha) { break; }
-
                 // Adds generated node to the current node's children(list)
                 node.addChild(child);
           }
@@ -158,19 +152,18 @@ class GameTreeNode {
     }
 
     /**
-    * Gets the utility score for a terminal node.
-    * @param  isMax Boolean representing whether the given node is a max (true) or min (false) node
-    * @return integer value representing whether our agent has won or not.
-    *
+    * Appends a child node to the current node's children list.
+    * @param child GameTreeNode representing the child that will be added to
+    * children list
     */
     public void addChild (GameTreeNode child) {
       children.add(child);
     }
 
     /**
-    * Gets the utility score for a terminal node.
-    * @param  isMax Boolean representing whether the given node is a max (true) or min (false) node
-    * @return integer value representing whether our agent has won or not.
+    * Scores the current node and returns it's new value.
+    * @param  score Integer representing the new value for the node.
+    * @return integer value representing the new value for the node.
     *
     */
     public int scoreNode (int score) {
