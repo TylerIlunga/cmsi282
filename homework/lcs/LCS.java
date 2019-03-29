@@ -1,3 +1,5 @@
+// Author: Tyler Ilunga
+
 package lcs;
 
 import java.lang.Math;
@@ -12,18 +14,9 @@ public class LCS {
     public static Set<String> bottomUpLCS (String rStr, String cStr) {
         int rowLength = rStr.length();
         int colLength = cStr.length();
-        memoCheck = initTable(new int[rowLength + 1][colLength + 1], rowLength, colLength);
+        memoCheck = new int[rowLength + 1][colLength + 1];
         executeLCS("bu", memoCheck, rStr, cStr);
         return collectSolution(rStr, rowLength, cStr, colLength, memoCheck);
-    }
-
-    private static int[][] initTable (int[][] arr, int rowLength, int colLength) {
-        for (int row = 0; row < rowLength + 1; row++) {
-            for (int col = 0; col < colLength + 1; col++) {
-                arr[row][col] = 0;
-            }
-        }
-        return arr;
     }
 
     private static int[][] bottomUpTableFill (int[][] arr, String rStr, String cStr) {
@@ -56,11 +49,13 @@ public class LCS {
             return getNewSet(rStr.charAt(row - 1), collectSolution(rStr, row - 1, cStr, col - 1, memo));
         }
         Set<String> result = new HashSet<String>();
-        // Recursive Case - Mismatched Letters: if cell to left is greater than or equal to cell above
+        // Recursive Case - Mismatched Letters: if cell to left is greater than or equal
+        // to cell above
         if (memo[row][col - 1] >= memo[row - 1][col]) {
             result.addAll(collectSolution(rStr, row, cStr, col - 1, memo));
         }
-        // Recursive Case - Mismatched Letters: if cell above is greater than or equal to cell to left
+        // Recursive Case - Mismatched Letters: if cell above is greater than or equal
+        // to cell to left
         if (memo[row - 1][col] >= memo[row][col - 1]) {
             result.addAll(new HashSet<String>(collectSolution(rStr, row - 1, cStr, col, memo)));
         }
@@ -73,30 +68,34 @@ public class LCS {
 
     private static Set<String> getNewSet (char currentChar, Set<String> currentSet) {
         ArrayList<String> toRemove = new ArrayList<String>();
-         for (String str: currentSet) {
-             toRemove.add(str);
-         }
-         for (String str : toRemove) {
-             currentSet.add(str += currentChar);
-         }
-         currentSet.removeAll(toRemove);
-         return currentSet;
+        for (String str : currentSet) {
+            toRemove.add(str);
+        }
+        for (String str : toRemove) {
+            currentSet.add(str += currentChar);
+        }
+        currentSet.removeAll(toRemove);
+        return currentSet;
     }
 
     public static Set<String> topDownLCS (String rStr, String cStr) {
         int rowLength = rStr.length();
         int colLength = cStr.length();
-        memoCheck = initTable(new int[rowLength + 1][colLength + 1], rowLength, colLength);
+        memoCheck = new int[rowLength + 1][colLength + 1];
         executeLCS("tu", memoCheck, rStr, cStr);
         return collectSolution(rStr, rowLength, cStr, colLength, memoCheck);
     }
 
     private static int topDownTableFill (boolean[][] memo, int[][] arr, String rStr, String cStr) {
-        if (rStr.length() == 0 || cStr.length() == 0) { return 0; }
+        if (rStr.length() == 0 || cStr.length() == 0) {
+            return 0;
+        }
 
         int currentRow = rStr.length();
         int currentCol = cStr.length();
-        if (memo[currentRow][currentCol]) { return arr[currentRow][currentCol]; }
+        if (memo[currentRow][currentCol]) {
+            return arr[currentRow][currentCol];
+        }
         memo[currentRow][currentCol] = true;
 
         char currentRChar = rStr.charAt(currentRow - 1);
@@ -131,16 +130,16 @@ public class LCS {
             bottomUpTableFill(memoCheck, rStr, cStr);
             return;
         }
-        topDownTableFill(new boolean [rStr.length() + 1][cStr.length() + 1], memoCheck, rStr, cStr);
+        topDownTableFill(new boolean[rStr.length() + 1][cStr.length() + 1], memoCheck, rStr, cStr);
     }
 
-     private static void printArray (int[][] arr) {
-         System.out.println(String.format("%s", "printArray()"));
-         System.out.println(Arrays.deepToString(arr));
+    private static void printArray(int[][] arr) {
+        System.out.println(String.format("%s", "printArray()"));
+        System.out.println(Arrays.deepToString(arr));
     }
 
-     private static void printArray (boolean [][] arr) {
-         System.out.println(String.format("%s", "printArray()"));
-         System.out.println(Arrays.deepToString(arr));
+    private static void printArray(boolean[][] arr) {
+        System.out.println(String.format("%s", "printArray()"));
+        System.out.println(Arrays.deepToString(arr));
     }
 }
