@@ -11,7 +11,7 @@ import java.util.Set;
 public class LCS {
     public static int[][] memoCheck;
 
-    public static Set<String> bottomUpLCS (String rStr, String cStr) {
+    public static Set<String> bottomUpLCS(String rStr, String cStr) {
         int rowLength = rStr.length();
         int colLength = cStr.length();
         memoCheck = new int[rowLength + 1][colLength + 1];
@@ -19,7 +19,7 @@ public class LCS {
         return collectSolution(rStr, rowLength, cStr, colLength, memoCheck);
     }
 
-    private static int[][] bottomUpTableFill (int[][] arr, String rStr, String cStr) {
+    private static int[][] bottomUpTableFill(int[][] arr, String rStr, String cStr) {
         for (int row = 1; row < arr.length; row++) {
             char currentRChar = rStr.charAt(row - 1);
             for (int col = 1; col < arr[row].length; col++) {
@@ -38,7 +38,7 @@ public class LCS {
         return arr;
     }
 
-    private static Set<String> collectSolution (String rStr, int row, String cStr, int col, int[][] memo) {
+    private static Set<String> collectSolution(String rStr, int row, String cStr, int col, int[][] memo) {
         if (row == 0 || col == 0) {
             Set<String> empty = new HashSet<String>();
             empty.add("");
@@ -62,11 +62,11 @@ public class LCS {
         return result;
     }
 
-    private static int handleValueInBounds (int value) {
+    private static int handleValueInBounds(int value) {
         return value - 1 <= 0 ? 0 : value - 1;
     }
 
-    private static Set<String> getNewSet (char currentChar, Set<String> currentSet) {
+    private static Set<String> getNewSet(char currentChar, Set<String> currentSet) {
         ArrayList<String> toRemove = new ArrayList<String>();
         for (String str : currentSet) {
             toRemove.add(str);
@@ -78,7 +78,7 @@ public class LCS {
         return currentSet;
     }
 
-    public static Set<String> topDownLCS (String rStr, String cStr) {
+    public static Set<String> topDownLCS(String rStr, String cStr) {
         int rowLength = rStr.length();
         int colLength = cStr.length();
         memoCheck = new int[rowLength + 1][colLength + 1];
@@ -86,7 +86,7 @@ public class LCS {
         return collectSolution(rStr, rowLength, cStr, colLength, memoCheck);
     }
 
-    private static int topDownTableFill (boolean[][] memo, int[][] arr, String rStr, String cStr) {
+    private static int topDownTableFill(boolean[][] memo, int[][] arr, String rStr, String cStr) {
         if (rStr.length() == 0 || cStr.length() == 0) {
             return 0;
         }
@@ -104,28 +104,26 @@ public class LCS {
             arr[currentRow][currentCol] = 1 + topDownTableFill(memo, arr, removeChar(rStr), removeChar(cStr));
             return arr[currentRow][currentCol];
         }
-        arr[currentRow][currentCol] = Math.max(
-            topDownTableFill(memo, arr, removeChar(rStr), cStr),
-            topDownTableFill(memo, arr, rStr, removeChar(cStr))
-        );
+        arr[currentRow][currentCol] = Math.max(topDownTableFill(memo, arr, removeChar(rStr), cStr),
+                topDownTableFill(memo, arr, rStr, removeChar(cStr)));
         return arr[currentRow][currentCol];
     }
 
-    private static String removeChar (String str) {
+    private static String removeChar(String str) {
         if (str.length() == 1) {
             return "";
         }
         return String.join("", Arrays.copyOfRange(str.split(""), 0, str.length() - 1));
     }
 
-    private static int checkForMemo (boolean[][] memo, int[][] arr, int currentRow, int currentCol) {
+    private static int checkForMemo(boolean[][] memo, int[][] arr, int currentRow, int currentCol) {
         if (arr[currentRow][currentCol] != 0) {
             return arr[currentRow][currentCol];
         }
         return currentRow;
     }
 
-    private static void executeLCS (String type, int[][] memoCheck, String rStr, String cStr) {
+    private static void executeLCS(String type, int[][] memoCheck, String rStr, String cStr) {
         if (type.equals("bu")) {
             bottomUpTableFill(memoCheck, rStr, cStr);
             return;

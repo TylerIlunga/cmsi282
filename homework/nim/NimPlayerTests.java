@@ -15,10 +15,10 @@ public class NimPlayerTests {
     // public Timeout globalTimeout = Timeout.seconds(3);
 
     // /**
-    //  * Basic test to make sure the nimesis knows the
-    //  * base cases: how to win when presented with the
-    //  * opportunity
-    //  */
+    // * Basic test to make sure the nimesis knows the
+    // * base cases: how to win when presented with the
+    // * opportunity
+    // */
     @Test
     public void NimPlayerTest_t0() {
         NimPlayer nimesis = new NimPlayer(2);
@@ -27,8 +27,8 @@ public class NimPlayerTests {
     }
 
     /**
-     * One-ply above winning condition to see it
-     * the nimesis can put itself into a sure win
+     * One-ply above winning condition to see it the nimesis can put itself into a
+     * sure win
      */
     @Test
     public void NimPlayerTest_t1() {
@@ -36,10 +36,11 @@ public class NimPlayerTests {
         assertEquals(1, nimesis.choose(4));
         assertEquals(2, nimesis.choose(5));
     }
+
     //
     // /**
-    //  * OK, two-ply now, just to make sure!
-    //  */
+    // * OK, two-ply now, just to make sure!
+    // */
     @Test
     public void NimPlayerTest_t2() {
         NimPlayer nimesis = new NimPlayer(2);
